@@ -1,0 +1,127 @@
+import 'whatwg-fetch'
+import { quadMacro, prepare } from 'init'
+import { getQID, getUrlVars, getQuadScript, queryString } from 'utils'
+import { getTokens, startRecording } from 'tracking'
+import { initSwipeDetection } from 'detectSwipe'
+
+// Components
+import { Header } from './components'
+
+/*
+ * Global vars
+ */
+let clickMacro
+const fallBack = JSON.stringify({
+  companyName: '',
+  storeName: '',
+  storeAddress: '',
+  primaryColor: '',
+  secondaryColor: '',
+  feedUrl: ''
+})
+
+/*
+ * {{> formatName}} v2
+ */
+
+const formatInit = () => {
+  console.log('[Init] ')
+  return new Promise((resolve, reject) => {
+    let url = ''
+    let products = []
+    let data = '\{{{data}}}' || fallBack
+
+    if (data.length) {
+      data = JSON.parse(data)
+      const source = getQuadScript() ? getQuadScript().src : ''
+      const params = getUrlVars(source)
+      const productFeed = data.feedUrl
+      url = `${productFeed}&${queryString(params)}`
+      console.log('[params]', params)
+    }
+
+    const { cookie, token } = getTokens()
+
+    const requestOptions = {
+      method: 'GET',
+      mode: 'cors'
+    }
+
+    const templateObj = {
+      cookie,
+      token,
+      adId: '\{{{adId}}}',
+      ID: `quad${getQID()}`,
+      qsp_http_url: '\{{{qsp_http_url}}}',
+      products,
+      materials: JSON.parse('\{{{materials}}}').arr,
+      options: JSON.parse('\{{{options}}}'),
+      data,
+      width: '\{{{width}}}',
+      height: '\{{{height}}}',
+      clickUrl: '\{{{clickUrl}}}'
+    }
+
+    // Get products or materials
+    if (url.length) {
+      window.fetch(`${url}`, requestOptions)
+        .then(response => response.json())
+        .then(response => {
+          templateObj.products = response
+          resolve(templateObj)
+        })
+        .catch(() => {
+          reject(new Error('Products not found or service is unavailable'))
+        })
+    } else {
+      templateObj.products = []
+      resolve(templateObj)
+    }
+  })
+}
+
+const formatRender = templateObj => {
+  const { data, products } = templateObj
+
+  console.log('[Render]')
+  console.log('[Data]', data)
+  if (!products.length) console.log('Products not found')
+  const quadWrap = document.getElementById('quadWrap')
+  quadWrap.className = 'quadWrap'
+
+  // Header Component
+  const header = new Header()
+  header.props = {
+    clickMacro,
+    companyName: data.companyName || '',
+    headerLine: data.primaryColor || '#000'
+  }
+
+  quadWrap.innerHTML = `
+      <div class="quadWrap__container">
+        ${header.render()}
+      </div>
+    `
+  return new Promise(resolve => {
+    resolve({
+      header
+    })
+  })
+}
+
+quadMacro()
+  .then(macro => {
+    if (macro) {
+      clickMacro = macro.split('&')[0]
+    }
+  })
+  .then(initSwipeDetection)
+  .then(prepare)
+  .then(startRecording)
+  .then(formatInit)
+  .then(formatRender)
+  .then(({ header }) => {
+    console.log('Binding Events')
+    header.bindEvents()
+  })
+  .catch(err => console.error(err))

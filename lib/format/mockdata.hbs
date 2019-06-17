@@ -1,0 +1,49 @@
+module.exports.mockdata = {
+  adId: '{{> formatName }}',
+  width: 320,
+  height: 320,
+  qsp_ws_url: 'wss://producer.quad.se',
+  qsp_http_url: 'https://producer.quad.se',
+  data: JSON.stringify({
+    companyName: '',
+    primaryColor: null,
+    secondaryColor: null,
+    feedUrl: ''
+  }),
+  scriptDeps: JSON.stringify({
+    arr: []
+  }),
+  cssDeps: JSON.stringify({
+    arr: []
+  }),
+  materials: JSON.stringify({
+    arr: [{
+      url: 'url-logo',
+      clickUrl: 'http://google.se'
+    }, {
+      'url': 'url-material1',
+      'class': '',
+      'id': '',
+      'clickUrl': 'https://track.adform.net/C/?bn=30652936',
+      'fileUrl': '',
+      'side': 3,
+      'sideAreas': [],
+      'hasMultipleAreas': false,
+      'brand': null,
+      'hotspot': null,
+      'text': null,
+      'title': null,
+      'body': null,
+      'width': 320,
+      'height': 320,
+      'tags': null
+    }]
+  }),
+
+  options: JSON.stringify({
+    spin: false,
+    flip: false,
+    clickUrl: 'https://9gag.com',
+    showControls: true
+  })
+}

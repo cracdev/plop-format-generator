@@ -1,0 +1,217 @@
+//Root 
+html, body {
+    overflow-x: hidden;
+    background-color: #f8f8f8;
+}
+body {
+    margin: 0px;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+.quadWrap {
+    margin: 0 auto;
+    line-height: 14px!important;
+    // border: 1px solid blue;
+    background: #fff;
+    @at-root #{&}__container{
+        position: relative;
+    }
+}
+.quad {
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    height: 50px;
+    box-shadow: 0px 0px 15px #ccc;
+    
+    img {
+        padding:10px;
+        height: 30px;
+    }
+}
+//Components
+// @import "./components/componentName/componentName-styles.scss";
+
+.quadWrap__container {
+    /* ----------- iPhone 4 and 4S ----------- */
+
+    /* Portrait and Landscape */
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 480px)
+    and (-webkit-min-device-pixel-ratio: 2) {
+    }
+
+    /* Portrait */
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 480px)
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (orientation: portrait) {
+    }
+
+    /* Landscape */
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 480px)
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (orientation: landscape) {
+    }
+
+    /* ----------- iPhone 5 and 5S ----------- */
+
+    /* Portrait and Landscape */
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 568px)
+    and (-webkit-min-device-pixel-ratio: 2) {
+    }
+
+    /* Portrait */
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 568px)
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (orientation: portrait) {
+        .vid {
+            position: absolute !important;
+            z-index: 1000;
+            left: 50%;
+
+            width: 100%;
+            min-width: 100%;
+            height: 100%;
+            min-height: 100%;
+
+            transform: translateX(-50%) translateY(-50%);
+
+            background: black;
+            video {
+                z-index: 1000000;
+
+                margin-top: 70%;
+            }
+        }
+    }
+
+    /* Landscape */
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 568px)
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (orientation: landscape) {
+    }
+
+    /* ----------- iPhone 6 ----------- */
+
+    /* Portrait and Landscape */
+    @media only screen
+    and (min-device-width: 375px)
+    and (max-device-width: 667px)
+    and (-webkit-min-device-pixel-ratio: 2) {
+    }
+
+    /* Portrait */
+    @media only screen
+    and (min-device-width: 375px)
+    and (max-device-width: 667px)
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (orientation: portrait) {
+        .vid {
+            position: absolute !important;
+            z-index: 1000;
+
+            background-color: green;
+            video {
+                position: absolute !important;
+                z-index: 1000;
+
+                transform: translateX(-50%) translateY(-50%);
+            }
+        }
+    }
+
+    /* Landscape */
+    @media only screen
+    and (min-device-width: 375px)
+    and (max-device-width: 667px)
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (orientation: landscape) {
+    }
+
+    /* ----------- iPhone 6+ ----------- */
+
+    /* Portrait and Landscape */
+    @media only screen
+    and (min-device-width: 414px)
+    and (max-device-width: 736px)
+    and (-webkit-min-device-pixel-ratio: 3) {
+    }
+
+    /* Portrait */
+    @media only screen
+    and (min-device-width: 414px)
+    and (max-device-width: 736px)
+    and (-webkit-min-device-pixel-ratio: 3)
+    and (orientation: portrait) {
+        .vid {
+            position: absolute !important;
+            z-index: 1000;
+            left: 50%;
+
+            width: 100%;
+            min-width: 100%;
+            height: 100%;
+            min-height: 100%;
+
+            transform: translateX(-50%) translateY(-50%);
+
+            background: black;
+            video {
+                z-index: 1000;
+
+                margin-top: 110%;
+            }
+        }
+    }
+
+    /* Landscape */
+    @media only screen
+    and (min-device-width: 414px)
+    and (max-device-width: 736px)
+    and (-webkit-min-device-pixel-ratio: 3)
+    and (orientation: landscape) {
+    }
+
+    *::-webkit-media-controls-panel {
+        display: none!important;
+
+        -webkit-appearance: none;
+    }
+
+    *::-webkit-media-controls {
+        display: none !important;
+
+        -webkit-appearance: none;
+    }
+    *::-webkit-media-controls-enclosure {
+        display: none !important;
+    }
+    /* Old shadow dom for play button */
+
+    *::--webkit-media-controls-play-button {
+        display: none!important;
+
+        -webkit-appearance: none;
+    }
+
+    /* New shadow dom for play button */
+
+    /* This one works */
+
+    *::-webkit-media-controls-start-playback-button {
+        display: none!important;
+
+        -webkit-appearance: none;
+    }
+}
