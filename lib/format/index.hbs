@@ -2,7 +2,6 @@ import 'whatwg-fetch'
 import { quadMacro, prepare } from 'init'
 import { getQID, getUrlVars, getQuadScript, queryString } from 'utils'
 import { getTokens, startRecording } from 'tracking'
-import { initSwipeDetection } from 'detectSwipe'
 
 // Components
 import { Header } from './components'
@@ -10,18 +9,12 @@ import { Header } from './components'
 /*
  * Global vars
  */
+
 let clickMacro
-const fallBack = JSON.stringify({
-  companyName: '',
-  storeName: '',
-  storeAddress: '',
-  primaryColor: '',
-  secondaryColor: '',
-  feedUrl: ''
-})
+const fallBack = JSON.stringify({})
 
 /*
- * {{> formatName}} v2
+ * {{> formatName}} vxx
  */
 
 const formatInit = () => {
@@ -93,8 +86,7 @@ const formatRender = templateObj => {
   const header = new Header()
   header.props = {
     clickMacro,
-    companyName: data.companyName || '',
-    headerLine: data.primaryColor || '#000'
+    data: {}
   }
 
   quadWrap.innerHTML = `
